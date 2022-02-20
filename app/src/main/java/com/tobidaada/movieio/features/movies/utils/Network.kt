@@ -1,37 +1,47 @@
 package com.tobidaada.movieio.features.movies.utils
 
+import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import com.tobidaada.movieio.features.movies.ResultWrapper
+import com.tobidaada.movieio.features.movies.data.datasource.remote.MovieErrorResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
 
+private const val DEFAULT_ERROR_MESSAGE = "Unable to make request."
 suspend fun <T : Any> safeApiCall(
     coroutineDispatcher: CoroutineDispatcher,
     call: suspend () -> Response<T>
 ): ResultWrapper<T> = withContext(coroutineDispatcher) {
     return@withContext try {
-        // invoke the api call
         val response = call.invoke()
 
-        // if it's successful, then return a response wrapped in a success body
-        if (response.isSuccessful) ResultWrapper.Success(response.body()!!)
+        if (response.isSuccessful) return@withContext ResultWrapper.Success(response.body()!!)
 
-        // handle other client errors
-        ResultWrapper.Error(response.message())
+        // handle possible client errors
+        ResultWrapper.Error(getHttpErrorMessage(response))
     } catch (e: Exception) {
-        // if there is an error, catch the error, and return the result
-        val defaultMessage = "Unable to make request."
         val message: String? = when (e) {
             is IOException -> e.message
-            is HttpException -> getErrorMessageFromHttpException(e)
-            else -> defaultMessage
+            is HttpException -> e.message()
+            else -> DEFAULT_ERROR_MESSAGE
         }
-        ResultWrapper.Error(message ?: defaultMessage)
+
+        ResultWrapper.Error(message ?: DEFAULT_ERROR_MESSAGE)
     }
 }
 
-private fun getErrorMessageFromHttpException(exception: HttpException): String {
-    return exception.message()
+private fun <T> getHttpErrorMessage(response: Response<T>): String {
+    val jsonString = response.errorBody()?.string() ?: return DEFAULT_ERROR_MESSAGE
+
+    return try {
+        val movieErrorResponse: MovieErrorResponse =
+            Gson().fromJson(jsonString, MovieErrorResponse::class.java)
+
+        movieErrorResponse.message ?: DEFAULT_ERROR_MESSAGE
+    } catch (e: JsonSyntaxException) {
+        DEFAULT_ERROR_MESSAGE
+    }
 }

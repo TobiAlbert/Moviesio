@@ -23,3 +23,8 @@ data class MovieRemote(
     @SerializedName("poster_path")
     val posterPath: String
 )
+
+data class MovieErrorResponse(
+    @SerializedName("status_message")
+    val message: String?
+)
