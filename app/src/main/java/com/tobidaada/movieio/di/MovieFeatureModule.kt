@@ -24,8 +24,8 @@ abstract class MovieFeatureModule {
         remoteDataSource: RemoteDataSourceImpl
     ): RemoteDataSource
 
-//    @Binds
-//    abstract fun bindsLocalDataSource(
-//        localDataSource: LocalDataSourceImpl
-//    ): LocalDataSource
+    @Binds
+    abstract fun bindsLocalDataSource(
+        localDataSource: LocalDataSourceImpl
+    ): LocalDataSource
 }

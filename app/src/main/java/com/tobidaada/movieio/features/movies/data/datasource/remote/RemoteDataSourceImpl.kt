@@ -5,7 +5,7 @@ import com.tobidaada.movieio.features.movies.data.models.MovieData
 import com.tobidaada.movieio.features.movies.data.repository.RemoteDataSource
 import com.tobidaada.movieio.features.movies.data.toDataObject
 import com.tobidaada.movieio.features.movies.transformResponse
-import com.tobidaada.movieio.features.movies.utils.safeApiCall
+import com.tobidaada.movieio.utils.safeApiCall
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

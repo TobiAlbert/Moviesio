@@ -1,4 +1,4 @@
-package com.tobidaada.movieio.features.movies.utils
+package com.tobidaada.movieio.utils
 
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
