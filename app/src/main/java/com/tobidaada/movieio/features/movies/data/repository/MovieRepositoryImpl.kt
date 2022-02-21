@@ -15,6 +15,10 @@ class MovieRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource
 ) : MovieRepository {
 
+    override suspend fun getMovie(id: Int): Movie? {
+        return localDataSource.getMovie(id)?.toDomainObject()
+    }
+
     override suspend fun getPopularMovies(): Flow<ResultWrapper<List<Movie>>> =
         networkBoundResource(
             query = { localDataSource.getPopularMovies() },

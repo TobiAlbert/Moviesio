@@ -12,7 +12,7 @@ interface MovieDao {
     fun getAllPopularMovies(): Flow<List<MovieLocal>>
 
     @Query("SELECT * FROM movies WHERE id=:id LIMIT 1")
-    suspend fun getMovie(id: String): MovieLocal?
+    suspend fun getMovie(id: Int): MovieLocal?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addMovies(movies: List<MovieLocal>)

@@ -18,6 +18,10 @@ class LocalDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun getMovie(id: Int): MovieData? {
+        return movieDao.getMovie(id)?.toDataObject()
+    }
+
     override suspend fun saveMovies(movies: List<MovieData>) =
         movieDao.addMovies(movies.map { it.toLocalObject() })
 }
