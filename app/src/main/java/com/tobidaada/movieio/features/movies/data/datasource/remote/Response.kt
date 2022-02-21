@@ -24,7 +24,10 @@ data class MovieRemote(
     val posterPath: String,
 
     @SerializedName("vote_average")
-    val rating: Float
+    val rating: Float,
+
+    @SerializedName("backdrop_path")
+    val backdropPath: String?
 )
 
 data class MovieErrorResponse(

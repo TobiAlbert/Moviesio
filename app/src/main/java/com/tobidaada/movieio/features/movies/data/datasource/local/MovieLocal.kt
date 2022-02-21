@@ -23,5 +23,8 @@ data class MovieLocal(
     val posterPath: String,
 
     @ColumnInfo(name = "rating")
-    val rating: Float
+    val rating: Float,
+
+    @ColumnInfo(name = "backdrop_path")
+    val backdropPath: String?
 )

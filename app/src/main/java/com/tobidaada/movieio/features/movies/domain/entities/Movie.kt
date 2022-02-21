@@ -7,4 +7,5 @@ data class Movie(
     val releaseDate: String,
     val posterPath: String,
     val rating: Float,
+    val backdropPath: String?
 )
