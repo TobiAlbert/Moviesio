@@ -10,10 +10,7 @@ import com.tobidaada.movieio.features.movies.domain.usecase.GetPopularMovies
 import com.tobidaada.movieio.features.movies.presentation.models.GetMoviesUiState
 import com.tobidaada.movieio.utils.AppDispatchers
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,12 +28,12 @@ class MovieViewModel @Inject constructor(
 
     init {
         // get movies
-        viewModelScope.launch(dispatchers.io()) {
+        viewModelScope.launch {
             _state.value = GetMoviesUiState.LoadingState()
 
-            getPopularMoviesUseCase.invoke().map { result: ResultWrapper<List<Movie>> ->
+            getPopularMoviesUseCase.invoke().collect { result: ResultWrapper<List<Movie>> ->
                 _state.value = when (result) {
-                    is ResultWrapper.Success -> GetMoviesUiState.SuccessState(result.value)
+                    is ResultWrapper.Success -> GetMoviesUiState.SuccessState(result.value.subList(0, 2))
                     is ResultWrapper.Error -> GetMoviesUiState.ErrorState(result.message)
                 }
             }
@@ -46,5 +43,4 @@ class MovieViewModel @Inject constructor(
     fun getMovie(id: Int) = liveData(dispatchers.io()) {
         emit(getMovieUseCase(id))
     }
-
 }
