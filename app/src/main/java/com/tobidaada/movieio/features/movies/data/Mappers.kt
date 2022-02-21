@@ -11,7 +11,8 @@ fun MovieRemote.toDataObject(): MovieData =
         title = title,
         overview = overview,
         releaseDate = releaseDate,
-        posterPath = posterPath
+        posterPath = posterPath,
+        rating = rating,
     )
 
 fun MovieData.toDomainObject(): Movie =
@@ -20,7 +21,8 @@ fun MovieData.toDomainObject(): Movie =
         title = title,
         overview = overview,
         releaseDate = releaseDate,
-        posterPath = posterPath
+        posterPath = posterPath,
+        rating = rating,
     )
 
 fun MovieData.toLocalObject(): MovieLocal =
@@ -29,7 +31,8 @@ fun MovieData.toLocalObject(): MovieLocal =
         title = title,
         overview = overview,
         releaseDate = releaseDate,
-        posterPath = posterPath
+        posterPath = posterPath,
+        rating = rating,
     )
 
 fun MovieLocal.toDataObject(): MovieData =
@@ -38,5 +41,6 @@ fun MovieLocal.toDataObject(): MovieData =
         title = title,
         overview = overview,
         releaseDate = releaseDate,
-        posterPath = posterPath
+        posterPath = posterPath,
+        rating = rating,
     )

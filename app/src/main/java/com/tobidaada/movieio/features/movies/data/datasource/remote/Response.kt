@@ -21,7 +21,10 @@ data class MovieRemote(
     val releaseDate: String,
 
     @SerializedName("poster_path")
-    val posterPath: String
+    val posterPath: String,
+
+    @SerializedName("vote_average")
+    val rating: Float
 )
 
 data class MovieErrorResponse(

@@ -33,7 +33,7 @@ class MovieViewModel @Inject constructor(
 
             getPopularMoviesUseCase.invoke().collect { result: ResultWrapper<List<Movie>> ->
                 _state.value = when (result) {
-                    is ResultWrapper.Success -> GetMoviesUiState.SuccessState(result.value.subList(0, 2))
+                    is ResultWrapper.Success -> GetMoviesUiState.SuccessState(result.value)
                     is ResultWrapper.Error -> GetMoviesUiState.ErrorState(result.message)
                 }
             }

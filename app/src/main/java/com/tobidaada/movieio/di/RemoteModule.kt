@@ -6,6 +6,7 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
 import com.tobidaada.movieio.BuildConfig
 import com.tobidaada.movieio.features.movies.data.datasource.remote.MovieService
+import com.tobidaada.movieio.utils.API_BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -78,7 +79,7 @@ object RemoteModule {
     fun providesRetrofit(client: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://api.themoviedb.org/3/movie/")
+            .baseUrl(API_BASE_URL)
             .client(client)
             .build()
 

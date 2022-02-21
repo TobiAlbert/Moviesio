@@ -20,5 +20,8 @@ data class MovieLocal(
     val releaseDate: String,
 
     @ColumnInfo(name = "poster_path")
-    val posterPath: String
+    val posterPath: String,
+
+    @ColumnInfo(name = "rating")
+    val rating: Float
 )
