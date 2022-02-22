@@ -10,7 +10,7 @@ import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
 
-private const val DEFAULT_ERROR_MESSAGE = "Unable to make request."
+const val DEFAULT_ERROR_MESSAGE = "Unable to make request."
 suspend fun <T : Any> safeApiCall(
     coroutineDispatcher: CoroutineDispatcher,
     call: suspend () -> Response<T>
