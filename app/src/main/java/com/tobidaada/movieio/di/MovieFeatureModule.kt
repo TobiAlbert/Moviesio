@@ -14,10 +14,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class MovieFeatureModule {
-    @Binds
-    abstract fun bindsMovieRepository(
-        movieRepositoryImpl: MovieRepositoryImpl
-    ): MovieRepository
 
     @Binds
     abstract fun bindsRemoteDataSource(
@@ -28,4 +24,13 @@ abstract class MovieFeatureModule {
     abstract fun bindsLocalDataSource(
         localDataSource: LocalDataSourceImpl
     ): LocalDataSource
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class MovieRepositoryModule {
+    @Binds
+    abstract fun bindsMovieRepository(
+        movieRepositoryImpl: MovieRepositoryImpl
+    ): MovieRepository
 }

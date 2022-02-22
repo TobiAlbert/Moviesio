@@ -37,7 +37,6 @@ class MovieFragment : Fragment() {
             // update ui with movie info
             binding.movieTitle.text = movie.title
             binding.movieSummary.text = movie.overview
-            binding.showStatus.text = "Released"
             binding.movieYear.text = movie.releaseDate.split("-").first()
 
             movie.backdropPath?.let { binding.moviePoster.load("$BACK_DROP_IMAGE_BASE_URL$it") }
