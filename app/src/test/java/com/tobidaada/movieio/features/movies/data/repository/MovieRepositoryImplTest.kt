@@ -5,16 +5,14 @@ import com.google.common.truth.Truth.assertThat
 import com.tobidaada.movieio.features.movies.ResultWrapper
 import com.tobidaada.movieio.features.movies.domain.repository.MovieRepository
 import com.tobidaada.movieio.utils.Factory
+import com.tobidaada.movieio.utils.MainCoroutineRule
 import io.mockk.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.setMain
-import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -22,6 +20,9 @@ import org.junit.runners.JUnit4
 @ExperimentalCoroutinesApi
 @RunWith(JUnit4::class)
 class MovieRepositoryImplTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     // subject under test
     private lateinit var repo: MovieRepository
@@ -34,12 +35,6 @@ class MovieRepositoryImplTest {
     @Before
     fun setup() {
         repo = MovieRepositoryImpl(remoteDataSource, localDataSource, dispatcher)
-        Dispatchers.setMain(dispatcher)
-    }
-
-    @After
-    fun teardown() {
-        Dispatchers.resetMain()
     }
 
     @Test
