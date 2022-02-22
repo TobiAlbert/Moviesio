@@ -3,13 +3,15 @@ package com.tobidaada.movieio.features.movies.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.tobidaada.movieio.di.IOCoroutineDispatcher
+import com.tobidaada.movieio.di.MainCoroutineDispatcher
 import com.tobidaada.movieio.features.movies.ResultWrapper
 import com.tobidaada.movieio.features.movies.domain.entities.Movie
 import com.tobidaada.movieio.features.movies.domain.usecase.GetMovie
 import com.tobidaada.movieio.features.movies.domain.usecase.GetPopularMovies
 import com.tobidaada.movieio.features.movies.presentation.models.GetMoviesUiState
-import com.tobidaada.movieio.utils.AppDispatchers
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,7 +20,8 @@ import javax.inject.Inject
 class MovieViewModel @Inject constructor(
     private val getPopularMoviesUseCase: GetPopularMovies,
     private val getMovieUseCase: GetMovie,
-    private val dispatchers: AppDispatchers
+    @IOCoroutineDispatcher private val ioDispatcher: CoroutineDispatcher,
+    @MainCoroutineDispatcher private val mainDispatcher: CoroutineDispatcher
 ): ViewModel() {
 
     private val _state: MutableStateFlow<GetMoviesUiState<List<Movie>>> =
@@ -28,7 +31,7 @@ class MovieViewModel @Inject constructor(
 
     init {
         // get movies
-        viewModelScope.launch {
+        viewModelScope.launch(mainDispatcher) {
             _state.value = GetMoviesUiState.LoadingState()
 
             getPopularMoviesUseCase.invoke().collect { result: ResultWrapper<List<Movie>> ->
@@ -40,7 +43,7 @@ class MovieViewModel @Inject constructor(
         }
     }
 
-    fun getMovie(id: Int) = liveData(dispatchers.io()) {
+    fun getMovie(id: Int) = liveData(ioDispatcher) {
         emit(getMovieUseCase(id))
     }
 }
