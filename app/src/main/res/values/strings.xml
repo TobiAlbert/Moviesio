@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Movieio</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sample_year">2018</string>
+    <string name="sample_movie_description">A sample description for this particular Tv Show</string>
+    <string name="poster_image">Poster</string>
+    <string name="movie_list_fragment_label">Movie List</string>
+    <string name="movie_fragment_label">Movie</string>
+    <string name="title_status">Status</string>
+    <string name="title_synopsis">Synopsis</string>
+    <string name="content_description_movie_poster">Movie Poster</string>
 </resources>
