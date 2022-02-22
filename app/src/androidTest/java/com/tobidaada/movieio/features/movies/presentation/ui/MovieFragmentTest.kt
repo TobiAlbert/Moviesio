@@ -44,7 +44,6 @@ class MovieFragmentTest {
         onView(withId(R.id.movieTitle)).check(matches(isDisplayed()))
         onView(withId(R.id.movieYear)).check(matches(isDisplayed()))
         onView(withId(R.id.movieSummary)).check(matches(isDisplayed()))
-        onView(withId(R.id.showStatus)).check(matches(isDisplayed()))
     }
 
     @Test
@@ -54,6 +53,5 @@ class MovieFragmentTest {
         onView(withId(R.id.movieTitle)).check(matches(withText(movie?.title)))
         onView(withId(R.id.movieYear)).check(matches(withText(movie?.releaseDate)))
         onView(withId(R.id.movieSummary)).check(matches(withText(movie?.overview)))
-        onView(withId(R.id.showStatus)).check(matches(withText("Released")))
     }
 }
