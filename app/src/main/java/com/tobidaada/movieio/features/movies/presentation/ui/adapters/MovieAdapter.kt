@@ -23,7 +23,7 @@ class MovieAdapter (private val onMovieItemSelected: (Int) -> Unit): ListAdapter
     companion object {
         val DiffCallback = object : DiffUtil.ItemCallback<Movie>() {
             override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
-                oldItem.id == oldItem.id
+                oldItem.id == newItem.id
 
             override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
                 oldItem == newItem
