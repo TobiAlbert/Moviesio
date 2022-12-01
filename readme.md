@@ -2,15 +2,9 @@
 Fun movie app for staying up to date with your favourite movies.
 
 ## Screenshots 📱
-
-### Dark Mode
-| Movies Page | Detail Page |
-| --- | --- |
-| ![Movies Page](./screenshots/moviesio_list_page_dark.png) | ![Detail Page](./screenshots/moviesio_detail_page_dark.png)
-### Light Mode
-| Movies Page  | Detail Page |
-| --- | --- |
-| ![Movies Page](./screenshots/moviesio_list_page_light.png) | ![Detail Page](./screenshots/moviesio_detail_page_light.png)
+| Movies Page (dark) | Detail Page (dark) | Movies Page (light) | Detail Page (light) |
+| -- | --- | --- | --- |
+| <img src="./screenshots/moviesio_list_page_dark.png" width="300px"> | <img src="./screenshots/moviesio_detail_page_dark.png" width="300px"> | <img src="./screenshots/moviesio_list_page_light.png" width="300px"> | <img src="./screenshots/moviesio_detail_page_light.png" width="300px">
 
 ## Prerequisites 🔩
 - Android min sdk 21 (Android 5.0)
