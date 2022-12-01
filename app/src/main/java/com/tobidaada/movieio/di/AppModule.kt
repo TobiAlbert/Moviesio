@@ -1,7 +1,7 @@
 package com.tobidaada.movieio.di
 
-import com.tobidaada.movieio.features.movies.data.TmdbRepository
-import com.tobidaada.movieio.features.movies.domain.repository.MovieRepository
+import com.tobidaada.movieio.utils.CoroutineDispatcherProvider
+import com.tobidaada.movieio.utils.DispatchersProvider
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -9,9 +9,9 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class MovieRepositoryModule {
+abstract class AppModule {
     @Binds
     abstract fun bindsMovieRepository(
-        movieRepositoryImpl: TmdbRepository
-    ): MovieRepository
+        dispatchProvider: CoroutineDispatcherProvider
+    ): DispatchersProvider
 }

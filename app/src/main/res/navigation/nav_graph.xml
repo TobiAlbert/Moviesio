@@ -6,7 +6,7 @@
     app:startDestination="@id/movieListFragment">
     <fragment
         android:id="@+id/movieListFragment"
-        android:name="com.tobidaada.movieio.features.movies.presentation.ui.MovieListFragment"
+        android:name="com.tobidaada.movieio.features.movies.presentation.MovieListFragment"
         android:label="@string/movie_list_fragment_label"
         tools:layout="@layout/fragment_movie_list">
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/movieFragment"
-        android:name="com.tobidaada.movieio.features.movies.presentation.ui.MovieFragment"
+        android:name="com.tobidaada.movieio.features.movies.presentation.MovieFragment"
         android:label="@string/movie_fragment_label"
         tools:layout="@layout/fragment_movie">
         <argument

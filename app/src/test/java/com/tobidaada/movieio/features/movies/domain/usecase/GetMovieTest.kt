@@ -3,11 +3,10 @@ package com.tobidaada.movieio.features.movies.domain.usecase
 import com.google.common.truth.Truth.assertThat
 import com.tobidaada.movieio.features.movies.domain.repository.MovieRepository
 import com.tobidaada.movieio.utils.Factory
-import com.tobidaada.movieio.utils.MainCoroutineRule
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -21,10 +20,8 @@ class GetMovieTest {
     // subject under test
     private val getMovieUseCase = GetMovie(repo)
 
-    private val dispatcher = MainCoroutineRule()
-
     @Test
-    fun getMovie_returnsNull_whenMovieWithIdDoesNotExist() = dispatcher.runBlockingTest {
+    fun getMovie_returnsNull_whenMovieWithIdDoesNotExist() = runTest {
         // given a use case that returns null when an id is passed
         coEvery { getMovieUseCase.invoke(any()) } returns null
 
@@ -37,7 +34,7 @@ class GetMovieTest {
     }
 
     @Test
-    fun getMovie_returnsMovie_whenMovieWithIdExists() = dispatcher.runBlockingTest {
+    fun getMovie_returnsMovie_whenMovieWithIdExists() = runTest {
         // given a use case that returns a movie when an id is passed
         val dummyResponse = Factory.createMovieDomain()
         coEvery { getMovieUseCase.invoke(any()) } returns dummyResponse

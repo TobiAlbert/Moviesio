@@ -5,7 +5,7 @@ import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
 import com.tobidaada.movieio.BuildConfig
-import com.tobidaada.movieio.features.movies.data.datasource.remote.MovieService
+import com.tobidaada.movieio.features.movies.data.api.MovieApi
 import com.tobidaada.movieio.utils.API_BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -25,7 +25,7 @@ object RemoteModule {
 
     @Provides
     @Singleton
-    fun networkInterceptor(): Interceptor = Interceptor { chain ->
+    fun authenticatorInterceptor(): Interceptor = Interceptor { chain ->
         val request = chain.request()
         val originalHttpUrl = request.url()
 
@@ -85,6 +85,6 @@ object RemoteModule {
 
     @Provides
     @Singleton
-    fun provideMovieService(retrofit: Retrofit): MovieService =
-        retrofit.create(MovieService::class.java)
+    fun provideMovieService(retrofit: Retrofit): MovieApi =
+        retrofit.create(MovieApi::class.java)
 }

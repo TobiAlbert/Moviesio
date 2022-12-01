@@ -5,8 +5,11 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.tobidaada.movieio.utils.MainCoroutineRule
+import com.tobidaada.movieio.features.movies.data.local.AppDatabase
+import com.tobidaada.movieio.features.movies.data.local.MovieDao
+import com.tobidaada.movieio.features.movies.data.local.MovieLocal
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.test.runBlockingTest
@@ -23,9 +26,6 @@ class MovieDaoTest {
 
     private lateinit var database: AppDatabase
     private lateinit var dao: MovieDao
-
-    @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
@@ -88,15 +88,15 @@ class MovieDaoTest {
         val startIndex = 1
         val endIndex = 10
 
-        val movies = (startIndex..endIndex).map { createMovie(it) }
+        val movies = (startIndex..endIndex).map(::createMovie)
 
         dao.addMovies(movies)
 
         dao.deleteAllMovies()
 
-        dao.getAllPopularMovies().collect {
-            assertThat(it).isEmpty()
-
+        dao.getAllPopularMovies().test {
+            val localMovies = awaitItem()
+            assertThat(localMovies).isEmpty()
         }
     }
 
