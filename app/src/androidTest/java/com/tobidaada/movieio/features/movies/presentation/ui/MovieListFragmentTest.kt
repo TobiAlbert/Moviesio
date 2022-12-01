@@ -1,7 +1,6 @@
 package com.tobidaada.movieio.features.movies.presentation.ui
 
 import android.os.Bundle
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
@@ -16,7 +15,8 @@ import androidx.test.filters.MediumTest
 import com.google.common.truth.Truth.assertThat
 import com.tobidaada.movieio.R
 import com.tobidaada.movieio.features.movies.domain.repository.MovieRepository
-import com.tobidaada.movieio.features.movies.presentation.ui.adapters.MovieViewHolder
+import com.tobidaada.movieio.features.movies.presentation.MovieListFragment
+import com.tobidaada.movieio.features.movies.presentation.adapters.MovieViewHolder
 import com.tobidaada.movieio.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -36,9 +36,6 @@ class MovieListFragmentTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
-
-    @get:Rule
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Inject
     lateinit var repo: MovieRepository

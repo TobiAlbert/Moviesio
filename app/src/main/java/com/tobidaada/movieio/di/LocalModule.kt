@@ -2,7 +2,7 @@ package com.tobidaada.movieio.di
 
 import android.content.Context
 import androidx.room.Room
-import com.tobidaada.movieio.features.movies.data.datasource.local.AppDatabase
+import com.tobidaada.movieio.features.movies.data.local.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

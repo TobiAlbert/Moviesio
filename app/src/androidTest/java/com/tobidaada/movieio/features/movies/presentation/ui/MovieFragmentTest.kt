@@ -8,6 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.tobidaada.movieio.R
 import com.tobidaada.movieio.features.movies.domain.repository.MovieRepository
+import com.tobidaada.movieio.features.movies.presentation.MovieFragment
 import com.tobidaada.movieio.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

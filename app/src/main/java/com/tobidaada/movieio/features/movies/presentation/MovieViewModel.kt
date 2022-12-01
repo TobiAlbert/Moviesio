@@ -1,49 +1,36 @@
 package com.tobidaada.movieio.features.movies.presentation
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.tobidaada.movieio.di.IOCoroutineDispatcher
-import com.tobidaada.movieio.di.MainCoroutineDispatcher
-import com.tobidaada.movieio.features.movies.ResultWrapper
-import com.tobidaada.movieio.features.movies.domain.entities.Movie
+import com.tobidaada.movieio.features.movies.domain.models.Movie
 import com.tobidaada.movieio.features.movies.domain.usecase.GetMovie
-import com.tobidaada.movieio.features.movies.domain.usecase.GetPopularMovies
-import com.tobidaada.movieio.features.movies.presentation.models.GetMoviesUiState
+import com.tobidaada.movieio.utils.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
-    private val getPopularMoviesUseCase: GetPopularMovies,
-    private val getMovieUseCase: GetMovie,
-    @IOCoroutineDispatcher private val ioDispatcher: CoroutineDispatcher,
-    @MainCoroutineDispatcher private val mainDispatcher: CoroutineDispatcher
-): ViewModel() {
+    private val getMovie: GetMovie,
+    private val dispatchersProvider: DispatchersProvider,
+) : ViewModel() {
 
-    private val _state: MutableStateFlow<GetMoviesUiState<List<Movie>>> =
-        MutableStateFlow(GetMoviesUiState.SuccessState(emptyList()))
+    val viewState: MutableStateFlow<ViewState> = MutableStateFlow(ViewState())
 
-    val state: StateFlow<GetMoviesUiState<List<Movie>>> = _state.asStateFlow()
+    data class ViewState(
+        val isLoading: Boolean = true,
+        val movie: Movie? = null,
+    )
 
-    init {
-        // get movies
-        viewModelScope.launch(mainDispatcher) {
-            _state.value = GetMoviesUiState.LoadingState()
+    fun onDisplayMovie(id: Int) =
+        viewModelScope.launch(dispatchersProvider.main()) {
 
-            getPopularMoviesUseCase.invoke().collect { result: ResultWrapper<List<Movie>> ->
-                _state.value = when (result) {
-                    is ResultWrapper.Success -> GetMoviesUiState.SuccessState(result.value)
-                    is ResultWrapper.Error -> GetMoviesUiState.ErrorState(result.message)
-                }
-            }
+            val movie = getMovie(id = id)
+
+            viewState.value = viewState.value.copy(
+                isLoading = false,
+                movie = movie
+            )
         }
-    }
-
-    fun getMovie(id: Int) = liveData(ioDispatcher) {
-        emit(getMovieUseCase(id))
-    }
 }
